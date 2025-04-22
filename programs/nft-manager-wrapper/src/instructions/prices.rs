@@ -2,7 +2,7 @@ use anchor_lang::prelude::*;
 use crate::state::*;
 
 #[derive(Accounts)]
-#[instruction(src_nft: Pubkey, token_type: u8)]
+#[instruction(mint_nft: Pubkey, token_type: u8)]
 pub struct SetPriceContext<'info> {
     #[account(mut)]
     pub payer: Signer<'info>,
@@ -13,7 +13,7 @@ pub struct SetPriceContext<'info> {
         space = 8 + 32+ 8 + 1 + 1,
         seeds = [
             b"price",
-            src_nft.as_ref(),
+            mint_nft.as_ref(),
             &token_type.to_le_bytes(),
         ],
         bump,
@@ -23,9 +23,9 @@ pub struct SetPriceContext<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn set_price(ctx: Context<SetPriceContext>, src_nft: Pubkey, token_type: u8, price: u64) -> Result<()> {
+pub fn set_price(ctx: Context<SetPriceContext>, mint_nft: Pubkey, token_type: u8, price: u64) -> Result<()> {
     *ctx.accounts.price_account = Price {
-        src_nft,
+        mint_nft,
         price,
         token_type,
     };

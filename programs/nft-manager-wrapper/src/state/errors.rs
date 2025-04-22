@@ -4,4 +4,6 @@ use anchor_lang::prelude::*;
 pub enum NftManageWrapperError {
     #[msg("NftManageWrapperError: Math overflow")]
     MathOverflow,
+    #[msg("NftManageWrapperError: MintAccount Mismatch")]
+    MintAccountMismatch,
 }

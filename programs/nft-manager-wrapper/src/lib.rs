@@ -21,10 +21,10 @@ pub mod nft_manager_wrapper {
 
     pub fn buy(
         ctx: Context<BuyCallContext>,
-        src_nft: Pubkey,
+        mint_nft: Pubkey,
         token_type: u8,
         value: u64,
     ) -> Result<()> {
-        buy::buy(ctx, src_nft, token_type, value)
+        buy::buy(ctx, mint_nft, token_type, value)
     }
 }
