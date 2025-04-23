@@ -27,7 +27,7 @@ pub struct BuyCallContext<'info> {
     pub price_account: Account<'info, Price>,
 
     #[account(mut)]
-    pub owner: AccountInfo<'info>,
+    pub owner: SystemAccount<'info>,
 
     // spl代币转账相关账户
     #[account(mut)]
