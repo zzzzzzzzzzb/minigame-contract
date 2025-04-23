@@ -47,6 +47,14 @@ pub struct BuyCallContext<'info> {
     pub system_program: Program<'info, System>,
 }
 
+#[event]
+pub struct BuyEvent {
+    pub user: Pubkey,
+    pub mint_nft: Pubkey,
+    pub token_type: u8,
+    pub value: u64,
+}
+
 pub fn buy(
     ctx: Context<BuyCallContext>,
     _mint_nft: Pubkey,
@@ -122,6 +130,11 @@ pub fn buy(
         value,
     )?;
 
-    // msg!("buy: {}, {}, {}, {}, {}, {}, {}", ctx.accounts.sender.key, value, );
+    emit!(BuyEvent {
+        user: ctx.accounts.sender.key(),
+        mint_nft: ctx.accounts.mint_ata.key(),
+        token_type: price_info.token_type,
+        value,
+    });
     Ok(())
 }

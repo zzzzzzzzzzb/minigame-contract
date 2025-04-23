@@ -1,5 +1,5 @@
-use anchor_lang::prelude::*;
 use crate::state::*;
+use anchor_lang::prelude::*;
 
 #[derive(Accounts)]
 #[instruction(mint_nft: Pubkey, token_type: u8)]
@@ -23,12 +23,30 @@ pub struct SetPriceContext<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn set_price(ctx: Context<SetPriceContext>, mint_nft: Pubkey, token_type: u8, price: u64) -> Result<()> {
+#[event]
+pub struct SetPriceEvent {
+    pub mint_nft: Pubkey,
+    pub token_type: u8,
+    pub price: u64,
+}
+
+pub fn set_price(
+    ctx: Context<SetPriceContext>,
+    mint_nft: Pubkey,
+    token_type: u8,
+    price: u64,
+) -> Result<()> {
     *ctx.accounts.price_account = Price {
         mint_nft,
         price,
         token_type,
     };
-    msg!("set price {}", price);
+
+    emit!(SetPriceEvent {
+        mint_nft,
+        token_type,
+        price
+    });
+
     Ok(())
 }
