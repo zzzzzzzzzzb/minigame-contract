@@ -103,6 +103,10 @@ describe("Test", () => {
             amount
         );
         console.log("mintTo");
+        const senderTokenAccountBefore = await program.provider.connection.getTokenAccountBalance(senderAta)
+        const ownerTokenAccountBefore = await program.provider.connection.getTokenAccountBalance(ownerAta)
+        console.log("sender token balance:{}", senderTokenAccountBefore.value.uiAmount.toString())
+        console.log("owner token balance:{}", ownerTokenAccountBefore.value.uiAmount.toString())
 
         let src_nft = mint_nft;
         let token_type = 2;
@@ -124,7 +128,6 @@ describe("Test", () => {
                 payer: program.provider.publicKey,
                 priceAccount: price_account,
             })
-            // .signers([program.provider.wallet.payer])
             .rpc();
         console.log(`[set price]Use 'solana confirm -v ${txHash}' to see the logs`);
         await program.provider.connection.confirmTransaction(txHash);
@@ -146,5 +149,9 @@ describe("Test", () => {
             .rpc();
         console.log(`[buy]Use 'solana confirm -v ${buyTxHash}' to see the logs`);
         await program.provider.connection.confirmTransaction(buyTxHash);
+        const senderTokenAccountAfter = await program.provider.connection.getTokenAccountBalance(senderAta)
+        const ownerTokenAccountAfter = await program.provider.connection.getTokenAccountBalance(ownerAta)
+        console.log("sender token balance:{}", senderTokenAccountAfter.value.uiAmount.toString())
+        console.log("owner token balance:{}", ownerTokenAccountAfter.value.uiAmount.toString())
     });
 });
