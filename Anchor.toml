@@ -6,7 +6,6 @@ resolution = true
 skip-lint = true
 
 [programs.localnet]
-minigame_contract = "AhGizHCqVHXgmPtV7QTskda3EpP1XgCw2ECSKuQYRQkP"
 nft_manager_wrapper = "5Pz73eRmegxqtFDA2zjUGT6iYPxfMrmPEbDu7NcYSKGy"
 
 [registry]
